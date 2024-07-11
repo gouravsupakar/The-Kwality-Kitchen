@@ -1,0 +1,212 @@
+<%- include("partials/MenuHeader") -%>
+
+<section class="Starter paddingStyle" id="StarterSection">
+    <h1 id="starter">Starter</h1>
+    <div class="menuItemContainer">
+
+        <% starterItems.map((item) => {%>
+            <div class="menuItems  shadow p-3 mb-5  rounded cardStyle" >
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price"><h2>₹ <span class="item-price"><%= item.price %></span>.00</h2></div>
+
+                    <div class="buttonDiv"><button type="button" data-action="add-to-cart" class="btn btn-light cartBtn">Add to cart</button></div>
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="Salad paddingStyle" id="Salad">
+    <h1 id="Salad">Salad</h1>
+
+    <div class="menuItemContainer">
+
+
+        <% saladItems.map((item) => {%>
+            <div class="menuItems shadow p-3 mb-5  rounded cardStyle" >
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span> .00</h2></div>
+
+                    <div class="buttonDiv"> <button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="Tandoor paddingStyle" id="Tandoor">
+    <h1 id="Tandoor">Tandoor</h1>
+    <div class="menuItemContainer">
+
+
+        <% tandoorItems.map((item) => {%>
+            <div class="menuItems shadow p-3 mb-5  rounded cardStyle" >
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span> .00</h2></div>
+
+                    <div class="buttonDiv"><button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+                    
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="VegCurry paddingStyle" id="VegCurry">
+    <h1 id="VegCurry">VegCurry</h1>
+    <div class="menuItemContainer">
+
+
+        <% vegCurryItems.map((item) => {%>
+            <div class="menuItems shadow p-3 mb-5  rounded cardStyle" >
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span> .00</h2></div>
+
+                    <div class="buttonDiv"> <button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+                   
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="NonVegCurry paddingStyle" id="NonVegCurry">
+    <h1 id="NonVegCurry">NonVegCurry</h1>
+    <div class="menuItemContainer">
+
+
+        <% nonVegCurryItems.map((item) => {%>
+            <div class="menuItems shadow p-3 mb-5 rounded cardStyle">
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span>.00</h2></div>
+
+                    <div class="buttonDiv"><button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+                    
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="Rice paddingStyle" id="Rice">
+    <h1 id="Rice">Rice</h1>
+    <div class="menuItemContainer">
+
+
+        <% riceItems.map((item) => {%>
+            <div class="menuItems shadow p-3 mb-5 rounded cardStyle">
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span> .00</h2></div>
+
+                    <div class="buttonDiv"> <button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+                   
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+<section class="Breads paddingStyle" id="Breads">
+    <h1 id="Breads">Breads</h1>
+    <div class="menuItemContainer">
+        <% breadItems.map((item) => {%>
+
+            <div class="menuItems shadow p-3 mb-5 rounded cardStyle">
+                <div class="menuImage">
+                    
+                    <img class="imageItem product-img" src= <%= `data:image/jpg;base64,${ item.image}` %>  alt="image">
+                
+                    <div class="menuName product-name"><h2 class="itemName"><%= item.Name %></h2></div>
+
+                </div>
+               
+                <div class="menuCartBtn ms-auto">
+                    
+                    <div class="menuPrice product-price "><h2>₹ <span class="item-price"><%= item.price %></span> .00</h2></div>
+
+                    <div class="buttonDiv">  <button type="button" data-action="add-to-cart" class="btn btn-light cartBtn" >Add to cart</button></div>
+                  
+
+                </div>
+                <br>
+                <br>
+            </div>
+        <% })  %>
+    </div>
+</section>
+
+
+
+<%- include("partials/MenuFooter") -%>

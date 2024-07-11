@@ -1,0 +1,251 @@
+
+</div>
+
+</body>
+
+<!-- footer section  -->
+
+<section class="footer">
+
+    <div class="share">
+        <a href="#" class="btn">facebook</a>
+        <a href="#" class="btn">twitter</a>
+        <a href="#" class="btn">instagram</a>
+        <a href="#" class="btn">pinterest</a>
+        <a href="#" class="btn">linkedin</a>
+    </div>
+
+    <h1 class="credit"> created by <span><a herf="https://www.techorzomind.com/">Techorzo Minds</i></span> | all
+        rights reserved! </h1>
+
+</section>
+
+<!-- scroll top button  -->
+<a href="#" class="fas fa-angle-up" id="scroll-top"></a>
+
+<script>
+  "use strict"
+
+  let cart = [];
+  let product;
+
+  const addtocartbtnDom = document.querySelectorAll('[data-action="add-to-cart"]');
+
+
+  addtocartbtnDom.forEach(addtocartbtnDom => {
+
+    addtocartbtnDom.addEventListener("click", async () => {
+      const menuCartBtn = addtocartbtnDom.parentNode.parentNode;
+      const buttonDiv = addtocartbtnDom.parentNode;
+      const productDom = addtocartbtnDom.parentNode.parentNode.parentNode;    // change is made here and in the html starter buttun section classname and added a div
+      product = {
+        name: productDom.querySelector(".product-name").innerText,
+        price: parseInt(productDom.querySelector(".item-price").innerText),
+        quantity: 1
+      }
+
+      buttonDiv.remove();
+
+      await menuCartBtn.insertAdjacentHTML('beforeend', `
+
+      <div class="subtractBtn"><button class="minusBtn  addBtn btn btn-light btn-sm" data-action="decrease">
+     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="10"
+       height="10" viewBox="0 0 256 256" xml:space="preserve">
+       <defs></defs>
+       <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+         transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+         <path
+           d="M 86.5 48.5 h -83 C 1.567 48.5 0 46.933 0 45 s 1.567 -3.5 3.5 -3.5 h 83 c 1.933 0 3.5 1.567 3.5 3.5 S 88.433 48.5 86.5 48.5 z"
+           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;"
+           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+         <path
+           d="M 86.5 48.5 h -83 C 1.567 48.5 0 46.933 0 45 s 1.567 -3.5 3.5 -3.5 h 83 c 1.933 0 3.5 1.567 3.5 3.5 S 88.433 48.5 86.5 48.5 z"
+           style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(29,29,27); fill-rule: nonzero; opacity: 1;"
+           transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+       </g>
+     </svg></button></div>
+
+     <div class="quantityInfo">
+            <p class="p-3 pb-2 bg-white" id="itemQuantity">${product.quantity}</p>
+      </div>
+
+      <div class="addingBtn"><button class="plusBtn addBtn btn btn-light btn-sm" data-action="increase"><svg
+       xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24">
+       <path fill-rule="evenodd"
+         d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"></path>
+        </svg></button>
+      </div>
+      
+    `)
+
+      cart.push(product);
+
+      sendData(cart);
+
+      updateCartSign();
+
+      alert('Item added to your cart')
+
+     await addEventListenerToPlusButtons(product);
+     
+     await addEventListenerToMinusButtons(product);
+
+    });
+
+  });
+
+
+  
+
+function addEventListenerToPlusButtons(data) {
+
+    document.querySelectorAll('[data-action="increase"]').forEach(button => {
+
+
+        button.addEventListener('click', () => {
+
+          let itemName = button.parentNode.parentNode.parentNode.querySelector(".itemName").innerText;
+          let existingItem = cart.find(item => item.name === data.name);
+    
+        if (cart.length > 0) {
+
+            if(existingItem) {
+
+              if (itemName === existingItem.name && existingItem.quantity >= 0) {
+              // Increment the quantity of the existing item
+              existingItem.quantity++;
+            } 
+
+            if (existingItem.name === itemName) {
+                let quantityPara = button.parentNode.parentNode.querySelector('#itemQuantity'); 
+                if (quantityPara) {
+                    quantityPara.innerText = data.quantity;
+                }
+            }
+
+            } else {
+              data.quantity = 1;
+              cart.push(data);
+
+                let quantityPara = button.parentNode.parentNode.querySelector('#itemQuantity'); 
+                if (quantityPara) {
+                    quantityPara.innerText = data.quantity;
+                }
+            }
+            
+
+          } else if(cart.length === 0) {
+            data.quantity = 1;
+            cart.push(data);
+
+                let quantityPara = button.parentNode.parentNode.querySelector('#itemQuantity'); 
+                if (quantityPara) {
+                    quantityPara.innerText = data.quantity;
+                }
+          }
+
+          
+          sendData(cart);
+
+          updateCartSign();
+
+         console.log("plusBtn clicked", cart);
+        });
+    });
+
+    
+
+}
+
+  function addEventListenerToMinusButtons(data) {
+
+    document.querySelectorAll('[data-action="decrease"]').forEach(button => {
+      button.addEventListener('click', () => {
+
+        let itemName = button.parentNode.parentNode.parentNode.querySelector(".itemName").innerText;
+        let existingItem = cart.find(item => item.name === data.name);
+
+        if (cart.length >= 0) {
+          if (itemName === existingItem.name) {
+            // Increment the quantity of the existing item
+            if (existingItem.quantity > 0) {
+
+              existingItem.quantity--;
+            }
+
+          } 
+
+        } 
+
+        if (existingItem.quantity < 1) {
+          let existingItemIndex = cart.findIndex(item => item.name === data.name);
+          cart.splice(existingItemIndex, 1)
+        }
+
+        if (existingItem.name === itemName) {
+          let quantityPara = button.parentNode.parentNode.querySelector('#itemQuantity'); // Assuming the quantity display is the next sibling
+          if (quantityPara) {
+            quantityPara.innerText = existingItem.quantity;
+          }
+        }
+
+        sendData(cart);
+
+        updateCartSign();
+
+        console.log("Minus button clicked", cart);
+      });
+
+    });
+
+  }
+
+
+function sendData(data) {
+
+    const jsonData = JSON.stringify({data});
+
+    fetch("http://localhost:3000/cart", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonData
+    })
+      .then((res) => res.json())
+      .then((data) => console.log('Cart data sent successfully:', data))
+      .catch(error => console.error('Error sending cart data:', error));
+}
+
+// update cart ui here
+
+function updateCartSign() {
+    if (cart.length > 0) {
+      document.querySelector('.cartSign').innerText = `Cart = ${cart.length}`;
+    }
+}
+
+
+const checkAuthentication=async()=>{
+  try{
+        const token = await localStorage.getItem("kwalityKitchen")
+        if(token === null){
+          alert("Session Expired !! Please login again")
+          window.location.href = "/loginindex";
+        }
+  }
+  catch(err){
+    return err.message
+  }
+}
+
+
+checkAuthentication()
+  
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</html>

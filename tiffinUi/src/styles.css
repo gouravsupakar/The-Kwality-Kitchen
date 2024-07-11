@@ -1,0 +1,100 @@
+
+*{
+    font-family: "Nunito", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f7f7f7;
+}
+
+
+.siteTitle {
+    font-size: 1.5rem;
+}
+
+.siteTitle:hover {
+    color: red;
+}
+
+.nav {
+    background: #fff;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.6rem; 
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.nav ul {
+    padding: 0;
+    margin: 0;
+    margin-right: 4rem;
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+}
+
+.nav a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem;
+}
+
+.nav li:hover {
+    color: red;
+}
+
+.nav li.active {
+    color: red;
+}
+
+
+.itemImage {
+    padding: 1px;
+    width: 300px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 30px;
+    border: solid 4px;
+    border-color: #fff;
+}
+
+.contentDiv {
+    padding: 1px;
+    width: 300px;
+    height: 150px;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.cardDiv{
+    text-align: center;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.cardDiv:hover {
+    background-color: #F5FDFF;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.itemsTitle {
+    font-size: 3rem;
+    font-family: 'Nunito', sans-serif;
+}
+
+

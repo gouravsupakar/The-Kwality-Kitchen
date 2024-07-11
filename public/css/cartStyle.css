@@ -1,0 +1,113 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700&display=swap");
+
+:root {
+  --red: #ff3838;
+}
+
+* {
+  font-family: "Nunito", sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: all 0.2s linear;
+}
+
+.clear-cart {
+  background-color: #e01616;
+}
+
+.clear-cart:hover {
+  background-color: #ff3838;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding box shadow */
+  transition: box-shadow 0.2s ease; /* Smooth transition for shadow */
+  
+}
+
+.pay-button {
+  background-color: #3abd19;
+}
+
+.pay-button:hover {
+  background-color: #35f535;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding box shadow */
+  transition: box-shadow 0.2s ease; /* Smooth transition for shadow */
+  
+}
+
+.centered-container {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    height: 80vh; 
+    width: 100%;
+    
+}
+
+.cartButtonContainer {
+  text-align: center;
+  margin: auto;
+}
+
+.emptyCart {
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.order-button {
+  box-shadow: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #78c50d;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding box shadow */
+  transition: box-shadow 0.2s ease; /* Smooth transition for shadow */
+}
+
+.order-button:hover {
+  background-color: #35f535;
+}
+
+.order-button a {
+  color: white;
+  text-decoration: none;
+}
+
+.custom-flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Ensure items are vertically centered */
+}
+
+.cartContainer {
+  background:url(../images/home-bg.jpg) no-repeat;
+  background-size: contain ;
+  background-repeat: repeat;
+}
+
+.bodyBackground {
+  background:url(../images/home-bg.jpg) ;
+  background-repeat: repeat;
+  background-position:center ;
+  background-size: contain;
+}
+
+.cart-details {
+  background-color: #f7f7f7;
+  padding: 10px;
+}
+
+

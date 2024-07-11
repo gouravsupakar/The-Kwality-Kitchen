@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/cartStyle.css">
+</head>
+
+<body>
+    <div class=" badge-light pt-1 pb-1 mb-2 pl-4 pr-3 w-full custom-flex-container">
+      
+      <h4 class="pl-2">Cart</h4>
+
+      <a class="nav-link active " aria-current="page" href="/indexAppPage">
+              <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" fill="red" class="bi bi-house-fill" viewBox="0 0 16 16">
+                  <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                  <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
+                </svg>
+       </a>
+    
+    </div>
+
+      
+  
+  
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 container container-fluid containerDiv">
+    <div class="cart"></div>
+  </div>
+
+  <script>
+
+   let cartData, tiffinData;
+
+    try {
+      cartData = JSON.parse('{{{cartData}}}');
+    } catch (error) {
+      console.error('Error parsing cartData:', error);
+      cartData = [];
+    }
+
+    try {
+      tiffinData = JSON.parse('{{{tiffinData}}}');
+    } catch (error) {
+      console.error('Error parsing tiffinData:', error);
+      tiffinData = [];
+    }
+    
+    // Set cart to cartData if it has data, otherwise set to tiffinData
+    let cart;
+    if (cartData && cartData.length > 0) {
+      cart = cartData;
+    } else if (tiffinData && tiffinData.length > 0) {
+      cart = tiffinData;
+    } else {
+      cart = []; // Fallback to an empty array if neither has data
+    }
+    let cartTotal = 0;
+    let totalCartPrice = 0;
+    console.log(cart.length);
+    console.log(cart)
+
+
+    const cartDom = document.querySelector(".cart");
+
+
+    if (cart.length > 0) {
+      document.querySelector("body").classList.add("bodyBackground");
+
+      cart.map((product) => {
+        cartDom.insertAdjacentHTML("beforeend", `
+  <div class="d-flex flex-row  shadow-sm card cart-items mt-2 mb-3 animated flipInX">
+    <div class="p-2 mt-3">
+        <p class="text-info cart_item_name">${product.name}</p>
+    </div>
+    <div class="p-2 mt-3">
+        <p class="text-success cart_item_price">₹ <span class="productPrice">${product.price * product.quantity}</span> .00</p>
+    </div>
+    <div class="p-2 mt-3 ml-auto">
+        <button class="btn badge badge-secondary" type="button" data-action="increase-item">&plus;
+    </div>
+    <div class="p-2 mt-3">
+      <p class="text-success cart_item_quantity">${product.quantity}</p>
+    </div>
+    <div class="p-2 mt-3">
+      <button class="btn badge badge-info" type="button" data-action="decrease-item">&minus;
+    </div>
+    <div class="p-2 mt-3">
+      <button class="btn badge badge-danger" type="button" data-action="remove-item">&times;
+    </div>
+   </div> `);
+  })
+
+      if (document.querySelector('.cart-footer') === null) {
+        cartDom.insertAdjacentHTML("afterend", `
+        <div class="cart-details">
+          <div class="d-flex justify-content-between pl-5 pr-5"><p>Total Number Of Items:</p> <p class="numberOfItems">0</p></div>
+          <div class="d-flex justify-content-between pl-5 pr-5"><p>Total Cart Value:</p> <p class="totalPrice">0</p></div>
+          <div class="d-flex justify-content-between pl-5 pr-5"><p>GST:</p> <p class="gstAndTax">0</p></div>
+          <div class="d-flex justify-content-between pl-5 pr-5"><p>Delivery Charges:</p> <p class="deliveryCharges">25</p></div>
+          <div class="d-flex justify-content-between pl-5 pr-5"><p>Total Price:</p> <p class="cartTotalPrice">2508.25</p></div>
+          <div class="addressDiv d-flex justify-content-between pl-5 pr-5"><p>Select your Address:</p> <button class="btn badge-primary">Address</butoon></div>
+        </div>
+      <div class="d-flex flex-row shadow-sm card cart-footer mt-2 mb-3 animated flipInX">
+        <div class="p-2">
+          <button class="btn badge-danger clear-cart" type="button" data-action="clear-cart">Clear Cart
+        </div>
+        <div class="p-2 ml-auto">
+          <button class="btn badge-success pay-button" type="button" data-action="check-out">Pay <span class="pay"></span> 
+            &#10137;
+        </div>
+      </div>`);
+      }
+
+    } else {
+      document.querySelector("body").classList.add("bodyBackground");
+      document.querySelector(".containerDiv").classList.add("cartContainer");
+      cartDom.insertAdjacentHTML("beforeend", `<div class="centered-container text-muted">
+        <div class="cartButtonContainer">
+        <h2 class="emptyCart">Your cart is empty</h2>
+        <button class="order-button"><a href="/Menu">Order Now</a></button>
+        </div>
+        </div>`);
+        document.querySelector(".cart-details").remove();
+    }
+
+
+
+
+    
+    
+
+    //button functionality
+
+    if(cart.length > 0){
+
+      const cartItemsDom = cartDom.querySelectorAll(".cart-items");
+
+      cartItemsDom.forEach(cartItemDom => {
+
+
+        cartTotal += parseInt(cartItemDom.querySelector(".cart_item_quantity").innerText) 
+      * parseInt(cartItemDom.querySelector(".productPrice").innerText) / parseInt(cartItemDom.querySelector(".cart_item_quantity").innerText) ;
+      
+      document.querySelector('.totalPrice').innerText = cartTotal;
+      document.querySelector(".gstAndTax").innerText = cartTotal * (5/100);
+
+       totalCartPrice = parseInt(document.querySelector('.totalPrice').innerText) + parseFloat(document.querySelector(".gstAndTax").innerText) +
+       parseInt(document.querySelector(".deliveryCharges").innerText);
+
+       document.querySelector(".cartTotalPrice").innerText = totalCartPrice;
+       document.querySelector('.pay').innerText = "₹ " + totalCartPrice ;
+
+
+
+
+      // increase item in cart button 
+      const plusBtn = cartItemDom.querySelector('[data-action="increase-item"]')
+      
+      plusBtn.addEventListener("click", () => {
+
+            let itemName = cartItemDom.querySelector(".cart_item_name").innerText.trim().toLowerCase();
+            console.log("Increase Item:", itemName);
+
+            let existingItem = cart.find(item => item.name.trim().toLowerCase() === itemName);
+            console.log("Existing Item Found:", existingItem);
+
+        if(existingItem){
+
+          if(existingItem.name.trim().toLowerCase() === itemName && existingItem.quantity >= 0){
+            existingItem.quantity++;
+          }
+
+          if(existingItem.name.trim().toLowerCase() === itemName){
+            cartItemDom.querySelector(".cart_item_quantity").innerText = existingItem.quantity;
+
+            let productPrice = cartItemDom.querySelector(".productPrice");
+
+            productPrice.innerText = parseInt(existingItem.quantity) *
+            parseInt(existingItem.price);
+
+            cartTotal += parseInt(existingItem.price);
+            
+            document.querySelector(".totalPrice").innerText = cartTotal ;
+            document.querySelector(".gstAndTax").innerText = cartTotal * (5/100);
+
+            totalCartPrice = parseInt(document.querySelector('.totalPrice').innerText) + parseFloat(document.querySelector(".gstAndTax").innerText) +
+            parseInt(document.querySelector(".deliveryCharges").innerText);
+
+            document.querySelector(".cartTotalPrice").innerText = totalCartPrice;
+            document.querySelector('.pay').innerText = "₹ " +  totalCartPrice  ;
+          }
+
+        }
+
+        console.log(cart);
+
+        console.log(cartTotal);
+
+        updateItemNumber();
+
+      });
+
+      
+
+
+      // decrease item in cart button
+
+      const minusBtn = cartItemDom.querySelector('[data-action="decrease-item"]');
+
+      minusBtn.addEventListener('click', () => {
+
+        let itemName = cartItemDom.querySelector(".cart_item_name").innerText.trim().toLowerCase();
+        console.log("Increase Item:", itemName);
+
+        let existingItem = cart.find(item => item.name.trim().toLowerCase() === itemName);
+        console.log("Existing Item Found:", existingItem);
+
+
+        if(existingItem){
+          if(existingItem.name.trim().toLowerCase() === itemName && existingItem.quantity > 0) {
+            existingItem.quantity--;
+          }
+
+          if(existingItem.quantity < 1){
+            let existingItemIndex = cart.findIndex(item => item.name.trim().toLowerCase() === itemName);
+          cart.splice(existingItemIndex, 1)
+            cartItemDom.remove();
+          }
+
+          if(existingItem.name.trim().toLowerCase() === itemName) {
+            cartItemDom.querySelector(".cart_item_quantity").innerText = existingItem.quantity;
+
+            let productPrice = cartItemDom.querySelector(".productPrice");
+
+            productPrice.innerText = parseInt(existingItem.quantity) *
+            parseInt(existingItem.price);
+
+            cartTotal -= parseInt(existingItem.price);
+          
+            document.querySelector(".totalPrice").innerText = cartTotal ;
+            document.querySelector(".gstAndTax").innerText = cartTotal * (5/100);
+
+            totalCartPrice = parseInt(document.querySelector('.totalPrice').innerText) + parseFloat(document.querySelector(".gstAndTax").innerText) +
+            parseInt(document.querySelector(".deliveryCharges").innerText);
+
+            document.querySelector(".cartTotalPrice").innerText = totalCartPrice;
+            document.querySelector('.pay').innerText = "₹ " +  totalCartPrice  ;
+          }          
+        }
+
+
+        if (cart.length < 1) {
+      
+          document.querySelector(".containerDiv").classList.add("cartContainer");
+          cartDom.insertAdjacentHTML("beforeend", `<div class="centered-container text-muted">
+          <div class="cartButtonContainer">
+          <h2 class="emptyCart">Your cart is empty</h2>
+          <button class="order-button"><a href="/Menu">Order Now</a></button>
+          </div>
+        </div>`);
+        document.querySelector(".cart-details").remove();
+        document.querySelector('.cart-footer').remove();
+        }
+
+        console.log(cart);
+
+        console.log(cartTotal);
+
+        updateItemNumber();
+
+      });
+
+
+
+      // remove item from cart button
+
+      const removeBtn = cartItemDom.querySelector('[data-action="remove-item"]')
+
+
+      removeBtn.addEventListener('click', () => {
+
+        let itemName = cartItemDom.querySelector(".cart_item_name").innerText.trim().toLowerCase();
+        console.log("Increase Item:", itemName);
+
+        let existingItem = cart.find(item => item.name.trim().toLowerCase() === itemName);
+        console.log("Existing Item Found:", existingItem);
+
+
+        if(existingItem && cart.length > 0) {
+          if(existingItem.name.trim().toLowerCase() === itemName){
+             let existingItemIndex = cart.findIndex(item => item.name.trim().toLowerCase() === itemName);
+          cart.splice(existingItemIndex, 1)
+            cartItemDom.remove();
+
+            let productPrice = cartItemDom.querySelector(".productPrice");
+
+            cartTotal -= parseInt(productPrice.innerText);
+            
+            document.querySelector(".totalPrice").innerText = cartTotal ;
+            document.querySelector(".gstAndTax").innerText = cartTotal * (5/100);
+
+            totalCartPrice = parseInt(document.querySelector('.totalPrice').innerText) + parseFloat(document.querySelector(".gstAndTax").innerText) +
+            parseInt(document.querySelector(".deliveryCharges").innerText);
+
+            document.querySelector(".cartTotalPrice").innerText = totalCartPrice;
+            document.querySelector('.pay').innerText = "₹ " +  totalCartPrice  ;
+          }
+        }
+
+        if(cart.length === 0){
+            document.querySelector(".containerDiv").classList.add("cartContainer");
+            cartDom.insertAdjacentHTML("beforeend", `<div class="centered-container text-muted">
+            <div class="cartButtonContainer">
+          <h2 class="emptyCart">Your cart is empty</h2>
+          <button class="order-button"><a href="/Menu">Order Now</a></button>
+          </div>
+          </div>`);
+          document.querySelector(".cart-details").remove();
+           document.querySelector('.cart-footer').remove();
+        }
+
+        console.log(cart);
+
+        console.log(cartTotal);
+
+        updateItemNumber();
+
+      });
+
+      
+      });
+
+
+      // clear the cart button
+
+      document.querySelector('[data-action="clear-cart"]').addEventListener("click" , () => {
+        document.querySelector(".cart").remove();
+        cart = [];
+        cartTotal = 0;
+        if(document.querySelector('.cart-footer') !== null){
+          document.querySelector('.cart-footer').remove();
+        }
+
+        if(cart.length === 0){
+          
+          document.querySelector(".containerDiv").classList.add("cartContainer");
+          const cartContainer = document.querySelector(".cartContainer");
+          cartContainer.insertAdjacentHTML("beforeend", `<div class="centered-container text-muted">
+            <div class="cartButtonContainer">
+           <h2 class="emptyCart">Your cart is empty</h2>
+           <button class="order-button"><a href="/Menu">Order Now</a></button>
+           </div>
+          </div>`);
+
+          document.querySelector(".cart-details").remove();
+        }
+
+        console.log(cart);
+        console.log(cartTotal)
+      });
+
+
+
+
+      // checkout btn
+
+      document.querySelector('[data-action="check-out"]').addEventListener("click" , async () => {
+
+        try{
+
+        const jsonData = JSON.stringify({cart,totalCartPrice });
+
+        const response = await fetch("/pay", {
+          method: 'POST',
+          headers: {
+           'Content-Type': 'application/json'
+          },
+          body: jsonData
+        });
+
+       
+        // Check if the request was successful
+        if (!response.ok) {
+            throw new Error('Failed to process payment');
+        }
+
+        // Extract the response data
+        const responseData = await response.json();
+
+       const paymentLink = responseData.response.longurl;
+        window.location.href = paymentLink;
+
+          // Log the status code
+        console.log('Payment Status Code:', response.status);
+
+    } catch (error) {
+          console.error('Error processing payment:', error);
+        }
+
+        
+      });
+
+
+    } 
+
+    
+
+    const updateItemNumber = () => {
+
+    if(cart.length > 0){
+
+      const cartItemsDom = cartDom.querySelectorAll(".cart-items");
+      let itemQuantity = 0;
+
+      cartItemsDom.forEach(cartItem => {
+        itemQuantity += parseInt(cartItem.querySelector(".cart_item_quantity").innerText);
+        document.querySelector(".numberOfItems").innerText = itemQuantity;
+      })
+    }
+   } 
+
+   if(cart.length > 0) {
+    updateItemNumber();
+   }
+
+    
+
+    
+
+
+    
+
+
+
+//Hi bro i have made this thing authenticated please go through this function ie checkAuthentication()
+// Now ur task is to jst copy this code under script tag in all the pages and this site is authenticated
+// we will be using this to authenticate users while getting payments and redirecting them
+
+const checkAuthentication=async()=>{
+  try{
+        const token = await localStorage.getItem("kwalityKitchen")
+        if(token === null){
+          alert("Session Expired !! Please login again")
+          window.location.href = "/loginindex";
+        }
+  }
+  catch(err){
+    return err.message
+  }
+}
+
+
+checkAuthentication()
+   
+
+
+  </script>
+</body>
+
+</html>
